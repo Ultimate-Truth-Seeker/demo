@@ -1,4 +1,4 @@
-package com.example.demo.controller.health;
+package com.example.demo.controller;
 
 
 import com.example.demo.exception.UserNotFoundException;
@@ -19,14 +19,14 @@ public class UsersController {
 
     private final UsersService usersService;
 
+    @Autowired
     public UsersController(@Autowired UsersService usersService) {
         this.usersService = usersService;
     }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody UserDto user) {
-        User u = new User(user);
-        User createdUser = usersService.save(u);
+        User createdUser = usersService.save(new User(user));
         URI createdUserUri = URI.create("/v1/users/" + createdUser.getId());
         return ResponseEntity.created(createdUserUri).body(createdUser);
     }
