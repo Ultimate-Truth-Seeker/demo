@@ -7,36 +7,24 @@ import java.util.Date;
 @Document(collection = "users")
 public class DBUser {
 
-    private static Integer ids = 1;
 
     @Id
     private final String id;
 
-    private final Date createdAt;
     private String name;
     private String lastName;
     private String email;
     private String password;
 
 
-    public DBUser(String lastName, String email, String password) {
-        this.createdAt = new Date();
+    public DBUser(String id, String lastName, String email, String password) {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.id = DBUser.ids.toString();
-        DBUser.ids ++;
+        this.id = id;
     }
 
-    public DBUser(UserDto userDto) {
-        this.id = DBUser.ids.toString();
-        DBUser.ids ++;
-        this.name = userDto.getName();
-        this.lastName = userDto.getLastName();
-        this.email = userDto.getEmail();
-        this.password = userDto.getPassword();
-        this.createdAt = new Date();
-    }
+
 
     public void update(UserDto userDto) {
         this.name = userDto.getName();
@@ -44,12 +32,15 @@ public class DBUser {
         this.email = userDto.getEmail();
         this.password = userDto.getPassword();
     }
+    public String getId() {
+        return id;
+    }
 
-    public String getPasswordHash() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPasswordHash(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -77,7 +68,5 @@ public class DBUser {
         this.name = name;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+
 }

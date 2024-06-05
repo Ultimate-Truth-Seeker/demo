@@ -21,8 +21,8 @@ public class DBUsersController {
     }
 
     @PostMapping
-    public DBUser guardar(@RequestBody UserDto modelo) {
-        return serviceMongoDB.guardar(new DBUser(modelo));
+    public DBUser guardar(@RequestBody DBUser modelo) {
+        return serviceMongoDB.guardar(modelo);
     }
 
     @GetMapping("{id}")
