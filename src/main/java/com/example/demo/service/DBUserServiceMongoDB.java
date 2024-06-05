@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DBUserServiceMongoDB {
+public class DBUserServiceMongoDB implements DBUserService {
     private final users repository;
 
     @Autowired
@@ -18,18 +18,21 @@ public class DBUserServiceMongoDB {
         this.repository = repository;
     }
 
+    @Override
     public DBUser guardar(DBUser modelo) {
         return repository.save(modelo);
     }
-
+    @Override
     public Optional<DBUser> obtenerPorId(String id) {
         return repository.findById(id);
     }
 
+    @Override
     public List<DBUser> obtenertodos() {
         return repository.findAll();
     }
 
+    @Override
     public DBUser actualizar(String id, UserDto user) {
         DBUser u = repository.findById(id).orElse(null);
         assert u != null;
@@ -37,6 +40,7 @@ public class DBUserServiceMongoDB {
         return repository.save(u);
     }
 
+    @Override
     public void eliminar(String id) {
         repository.deleteById(id);
     }

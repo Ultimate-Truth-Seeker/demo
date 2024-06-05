@@ -2,27 +2,33 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.DBUser;
+import com.example.demo.model.User;
 import com.example.demo.model.UserDto;
+import com.example.demo.service.DBUserService;
 import com.example.demo.service.DBUserServiceMongoDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/DBUser/")
 public class DBUsersController {
-    private final DBUserServiceMongoDB serviceMongoDB;
+    private final DBUserService serviceMongoDB;
 
     @Autowired
-    public DBUsersController(DBUserServiceMongoDB serviceMongoDB) {
+    public DBUsersController(@Autowired DBUserService serviceMongoDB) {
         this.serviceMongoDB = serviceMongoDB;
     }
 
     @PostMapping
-    public DBUser guardar(@RequestBody DBUser modelo) {
-        return serviceMongoDB.guardar(modelo);
+    public ResponseEntity<DBUser> guardar(@RequestBody DBUser modelo) {
+        DBUser user = serviceMongoDB.guardar(modelo);
+        URI createdUserUri = URI.create("/v1/users/" + user.getId());
+        return ResponseEntity.created(createdUserUri).body(user);
     }
 
     @GetMapping("{id}")
@@ -42,13 +48,26 @@ public class DBUsersController {
     }
 
     @PutMapping("{id}")
-    public DBUser actualizar(@PathVariable String id, @RequestBody UserDto modelo) {
-        return serviceMongoDB.actualizar(id, modelo);
+    public ResponseEntity<DBUser> actualizar(@PathVariable String id, @RequestBody UserDto modelo) {
+        Optional<DBUser> user = serviceMongoDB.obtenerPorId(id);
+        if (user.isPresent()) {
+            user.get().update(modelo);
+            return ResponseEntity.ok(serviceMongoDB.guardar(user.get()));
+        } else {
+            throw new UserNotFoundException(id);
+        }
+
     }
 
     @DeleteMapping("{id}")
     public void borrar(@PathVariable String id) {
-        serviceMongoDB.eliminar(id);
+        Optional<DBUser> user = serviceMongoDB.obtenerPorId(id);
+        if (user.isPresent()) {
+            serviceMongoDB.eliminar(id);
+        } else {
+            throw new UserNotFoundException(id);
+        }
+
     }
 
 }
