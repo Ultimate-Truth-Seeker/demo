@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
 public class UserDto {
     private final String name;
