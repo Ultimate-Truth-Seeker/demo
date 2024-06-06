@@ -2,7 +2,7 @@ package com.example.demo.security;
 
 
 import com.example.demo.security.jwt.AuthEntryPointJwt;
-import com.example.demo.security.jwt.AuthTokenFilter;
+import com.example.demo.security.jwt.JWTRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class SecurityConfiguration {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -28,8 +28,8 @@ public class WebSecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
+    public JWTRequestFilter authenticationJwtTokenFilter() {
+        return new JWTRequestFilter();
     }
 
     @Bean
@@ -58,7 +58,7 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/**").permitAll()
+                        auth.requestMatchers("/api/auth/**", "/health").permitAll()
                                 .anyRequest().authenticated()
                 );
 

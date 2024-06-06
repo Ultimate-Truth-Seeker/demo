@@ -29,13 +29,6 @@ public class SignUpRequestDto {
     @Size(max = 20, message = "Password can have have atmost 20 characters!")
     private String password;
 
-    private Set<String> roles;
 
-    @Autowired
-    public SignUpRequestDto(String userName, String email, String password) {
-        this.username = userName;
-        this.email = email;
-        this.password = password;
-        this.roles = null;
-    }
+
 }

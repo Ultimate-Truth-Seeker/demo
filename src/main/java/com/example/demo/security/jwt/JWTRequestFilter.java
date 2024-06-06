@@ -1,11 +1,6 @@
 package com.example.demo.security.jwt;
 
-import com.example.demo.model.DBUser;
-import com.example.demo.security.UserDetailsImpl;
 import com.example.demo.security.UserDetailsServiceImpl;
-import com.example.demo.service.DBUserService;
-import com.example.demo.service.DBUserServiceMongoDB;
-import com.example.demo.service.UsersService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,14 +18,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 
-public class AuthTokenFilter extends OncePerRequestFilter {
+public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JWTRequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
