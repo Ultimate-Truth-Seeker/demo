@@ -2,10 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.DBUser;
-import com.example.demo.model.User;
-import com.example.demo.model.UserDto;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.service.DBUserService;
-import com.example.demo.service.DBUserServiceMongoDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

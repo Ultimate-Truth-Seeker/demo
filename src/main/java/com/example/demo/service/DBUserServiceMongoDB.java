@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.DBUser;
-import com.example.demo.model.UserDto;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.repository.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +43,27 @@ public class DBUserServiceMongoDB implements DBUserService {
     @Override
     public void eliminar(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        for (DBUser u : repository.findAll()) {
+            if (u.getName().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        for (DBUser u : repository.findAll()) {
+            if (u.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

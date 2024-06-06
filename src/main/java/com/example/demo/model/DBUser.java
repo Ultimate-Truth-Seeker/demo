@@ -1,10 +1,11 @@
 package com.example.demo.model;
+import com.example.demo.model.dto.UserDto;
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 @Document(collection = "users")
+@Builder
 public class DBUser {
 
 

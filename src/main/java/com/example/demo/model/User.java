@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.demo.model.dto.UserDto;
+
 import java.util.Date;
 
 public class User {

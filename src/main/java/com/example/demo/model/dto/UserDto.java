@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.dto;
 
 public class UserDto {
     private final String name;
